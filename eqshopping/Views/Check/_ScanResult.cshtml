@@ -1,0 +1,61 @@
+﻿@using eqshopping.Controllers
+@model CheckController.SearchRS
+
+
+<div class="mt-3 mb-1 row">
+    <label class="col-3 col-form-label"><b>Tran ID. : </b></label>
+    <div class="col">
+        <input class="form-control" disabled value="@Model.txt_tranid">
+    </div>
+</div>
+
+<div class="my-1 row">
+    <label class="col-3 col-form-label"><b>Part No. :</b></label>
+    <div class="col">
+        <input class="form-control" disabled value="@Model.txt_partno" />
+    </div>
+</div>
+
+<div class="my-1 row">
+    <label class="col-3 col-form-label"><b>EQ. No. :</b></label>
+    <div class="col">
+        <input class="form-control fs-1 text-center" name="txt_equipmentno" />
+    </div>
+</div>
+
+
+@{
+    short i = 0;
+}
+<div id="table">
+    @if (Model.ls_sub.Count > 0)
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Seq.</th>
+                    <th>Task Code</th>
+                    <th>EQ.No.</th>
+                    <th>Checking Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var row in Model.ls_sub)
+                {
+                <tr>
+                    <td>@(++i)</td>
+                    <td>@row.taskcode</td>
+                    <td>@row.equipmentno</td>
+
+                    <td>
+                        @row.checkingdate?.ToString("dd-MM-yyyy")
+                        <br />
+                        @row.checkingdate?.ToString("HH:mm")
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    }
+
+</div>

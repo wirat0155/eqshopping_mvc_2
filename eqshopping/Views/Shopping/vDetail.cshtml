@@ -1,0 +1,80 @@
+﻿@using eqshopping.Controllers
+@model ShoppingController.vDetailFM;
+<div class="card shadow-sm">
+    <div class="card-body d-flex align-items-center justify-content-center text-white" style="background-color: darkseagreen">
+        <h1>จัดการข้อมูล</h1>
+    </div>
+</div>
+
+<partial name="_Form" model="@Model.obj_header" />
+
+<form onsubmit="Save(event);">
+    <input hidden name="txt_plantno" value="">
+    <input hidden name="txt_cellno" value="@Model.obj_header.txt_cellno">
+    <input hidden name="txt_posno" value="@Model.obj_header.txt_posno">
+    <div class="mb-1 row">
+        <label class="col-3 col-form-label"><b>Tran ID. : </b></label>
+        <div class="col">
+            <input class="form-control" disabled value="@Model.obj_tran.tranid">
+            <input hidden value="@Model.obj_tran.tranid" name="txt_tranid">
+        </div>
+    </div>
+
+    <div class="my-1 row">
+        <label class="col-3 col-form-label"><b>Part No. :</b></label>
+        <div class="col">
+            <input class="form-control" disabled value="@Model.txt_partno" id="txtPartNo" />
+            <input hidden value="@Model.txt_partno" name="txt_partno" />
+        </div>
+    </div>
+
+    @{
+        short i = 0;
+    }
+    <div id="table">
+        @if (Model.ls_sub.Count > 0)
+        {
+            <table class="table table-sm table-striped">
+                <thead>
+                    <tr>
+                        <th>Seq.</th>
+                        <th>Task Code</th>
+                        <th>EQ.No.</th>
+                        <th>Checking Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var row in Model.ls_sub)
+                    {
+                        <tr>
+                            <td>
+                                @(i+1)
+                            </td>
+                            <td>@row.taskcode</td>
+                            <td>@row.equipmentno</td>
+                            <td>
+                                @row.checkingdate?.ToString("dd-MM-yyyy")
+                                <br />
+                                @row.checkingdate?.ToString("HH:mm")
+                            </td>
+                        </tr>
+                        i++;
+                    }
+                </tbody>
+            </table>
+        }
+
+    </div>
+</form>
+
+
+<hr />
+<div class="d-flex justify-content-around">
+    <a class="btn w-50 text-white" style="background-color: orangered" asp-controller="Shopping" asp-action="vIndex" onclick="return confirm('คุณต้องการเริ่มใหม่หรือไม่?');">
+        เริ่มใหม่
+    </a>
+
+    <a asp-controller="MainMenu" asp-action="vList" class="btn w-25 text-white" style="background-color: coral" onclick="return confirm('คุณต้องการกลับไปที่เมนูหลักหรือไม่?');">
+        เมนูหลัก
+    </a>
+</div>

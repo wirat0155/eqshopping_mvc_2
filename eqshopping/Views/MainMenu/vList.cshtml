@@ -1,0 +1,164 @@
+﻿@using eqshopping.Controllers
+@model MainMenuController.vListVM;
+
+<div class="container-xl">
+    <div class="row row-deck row-cards">
+        <div class="col-12">
+            <div class="container">
+                <h1 class="text-center mb-4">EQ Shopping System</h1>
+                <div class="mb-5">
+                    <div class="row justify-content-center">
+                        @* Plant 3 Menus *@
+                        <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-3" id="menu-plt3-dis" style="display: none;">
+                            <a asp-controller="Check" asp-action="vIndex" class="text-decoration-none font-weight-bold fs-2 d-block h-100">
+                                <div class="card h-100 shadow-sm">
+                                    <div class="card-body d-flex align-items-center justify-content-center text-white" style="background-color: coral">
+                                        ตรวจสอบโดย Distributor
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+
+                        <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-3" id="menu-plt3-check" style="display: none;">
+                            <a asp-controller="Check" asp-action="vIndex" class="text-decoration-none font-weight-bold fs-2 d-block h-100">
+                                <div class="card h-100 shadow-sm">
+                                    <div class="card-body d-flex align-items-center justify-content-center text-white" style="background-color: coral">
+                                        ตรวจสอบ ก่อนเริ่มงาน
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+
+                        @* General Menus *@
+                        <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-3" id="menu-shopping">
+                            <a asp-controller="Shopping" asp-action="vIndex" class="text-decoration-none font-weight-bold fs-2 d-block h-100">
+                                <div class="card h-100 shadow-sm">
+                                    <div class="card-body d-flex align-items-center justify-content-center text-white" style="background-color: darkseagreen">
+                                        ช้อปปิ้ง
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+
+                        <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-3" id="menu-check">
+                            <a asp-controller="Check" asp-action="vIndex" class="text-decoration-none font-weight-bold fs-2 d-block h-100">
+                                <div class="card h-100 shadow-sm">
+                                    <div class="card-body d-flex align-items-center justify-content-center text-white" style="background-color: coral">
+                                        ตรวจสอบ
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+
+                        @* Always visible items *@
+                        <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-3">
+                            <a asp-controller="UnlockCell" asp-action="vIndex" class="text-decoration-none font-weight-bold fs-2 d-block h-100">
+                                <div class="card h-100 shadow-sm">
+                                    <div class="card-body d-flex align-items-center justify-content-center text-white" style="background-color: hotpink">
+                                        ปลดล็อค Cell
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+
+                        <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-3">
+                            <a asp-controller="DataManagement" asp-action="vIndex" class="text-decoration-none font-weight-bold fs-2 d-block h-100">
+                                <div class="card h-100 shadow-sm">
+                                    <div class="card-body d-flex align-items-center justify-content-center text-white" style="background-color: cornflowerblue">
+                                        จัดการข้อมูล
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+
+                        <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-3">
+                            <a asp-controller="History" asp-action="vSearch" class="text-decoration-none font-weight-bold fs-2 d-block h-100">
+                                <div class="card h-100 shadow-sm">
+                                    <div class="card-body d-flex align-items-center justify-content-center text-white" style="background-color: teal">
+                                        ประวัติการสแกน
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+
+                        @if (Model.txt_unlockdis)
+                        {
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-3">
+                                <a asp-controller="Auth" asp-action="ClearIP" class="text-decoration-none font-weight-bold fs-2 d-block h-100">
+                                    <div class="card h-100 shadow-sm">
+                                        <div class="card-body d-flex align-items-center justify-content-center text-white" style="background-color: black">
+                                            เปลี่ยนเครื่อง Dis
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        }
+                        @if (Model.showAssyCheck)
+                        {
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-3" id="menu-assy-check">
+                                <a href="javascript:void(0)" onclick="openAssyLoginModal()" class="text-decoration-none font-weight-bold fs-2 d-block h-100">
+                                    <div class="card h-100 shadow-sm">
+                                        <div class="card-body d-flex align-items-center justify-content-center text-white" style="background-color: darkgoldenrod">
+                                            Assy Check
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        }
+                    </div>
+                </div>
+                <hr />
+                <div class="row justify-content-center mt-4">
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-3">
+                        <a asp-controller="Auth" asp-action="Logout" onclick="return confirmLogout()" class="text-decoration-none font-weight-bold fs-2 d-block h-100">
+                            <div class="card h-100 shadow-sm">
+                                <div class="card-body d-flex align-items-center justify-content-center bg-danger text-white">
+                                    ออกจากโปรแกรม
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Assy Check Login Modal -->
+<div class="modal fade" id="modalAssyLogin" tabindex="-1" aria-labelledby="modalAssyLoginLabel" aria-hidden="true" data-bs-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-warning">
+                <h5 class="modal-title text-dark fw-bold" id="modalAssyLoginLabel">Login พนักงานคนที่มีสิทธิ์ Assembly</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="formAssyLogin">
+                    <div class="mb-3">
+                        <label for="txt_assy_username" class="form-label">รหัสพนักงาน (EmpNo)</label>
+                        <input type="text" class="form-control" id="txt_assy_username" required autocomplete="off">
+                    </div>
+                    <div class="mb-3">
+                        <label for="txt_assy_password" class="form-label">รหัสผ่าน (Password)</label>
+                        <input type="password" class="form-control" id="txt_assy_password" required>
+                    </div>
+                    <div class="alert alert-danger d-none" id="msg_assy_error"></div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
+                <button type="button" class="btn btn-primary" onclick="submitAssyLogin()">เข้าสู่ระบบ</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/MainMenu/vList.js" asp-append-version="true"></script>
+    <script>
+        $(document).ready(function () {
+            displayMenu();
+        });
+    </script>
+
+}

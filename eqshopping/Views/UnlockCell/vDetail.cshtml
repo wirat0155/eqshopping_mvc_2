@@ -1,0 +1,76 @@
+﻿@using eqshopping.Controllers
+@model UnlockCellController.vDetailFM;
+<div class="card shadow-sm">
+    <div class="card-body d-flex align-items-center justify-content-center text-white" style="background-color: hotpink">
+        <h1>ปลดล็อค Cell</h1>
+    </div>
+</div>
+
+<input hidden name="txt_plantno" value="">
+<partial name="_Form" model="@Model.obj_header" />
+
+<form onsubmit="Save(event)">
+    <input hidden name="txt_cellid" value="@Model.txt_cellid">
+    <div class="my-1 row">
+        <label class="col-3 col-form-label"><b>ID. :</b></label>
+        <div class="col">
+            <input name="txt_locktranid" value="@Model.obj_celllock.locktranid" hidden />
+            <input class="form-control text-center" value="@Model.obj_celllock.locktranid" disabled />
+        </div>
+    </div>
+    <div class="my-1 row">
+        <label class="col-3 col-form-label"><b>ล็อคเมื่อ :</b></label>
+        <div class="col">
+            <input type="datetime-local" class="form-control text-center" value="@Model.obj_celllock.lockdate.ToString("yyyy-MM-ddTHH:mm")" disabled />
+        </div>
+    </div>
+    <div class="my-1 row">
+        <label class="col-3 col-form-label"><b>ล็อคโดย :</b></label>
+        <div class="col">
+            <input class="form-control text-center" value="@Model.obj_celllock.creuser" disabled />
+        </div>
+    </div>
+    <div class="my-1 row">
+        <label class="col-3 col-form-label"><b>เหตุผลที่ล็อค :</b></label>
+        <div class="col">
+            <input class="form-control text-center" value="@Model.obj_celllock.lockreason" disabled />
+        </div>
+    </div>
+    <div class="my-1 row">
+        <label class="col-3 col-form-label"><b>เหตุผลที่ปลดล็อค :</b></label>
+        <div class="col">
+            <input class="form-control text-center" name="txt_unlockreason" id="txtUnlockReason" onkeyup="txtUnlockReason_KeyPress(event)" />
+        </div>
+    </div>
+
+    <div class="d-flex justify-content-center">
+        <button class="btn w-50 text-white btn-primary" type="submit" id="btnSave">
+            บันทึก
+        </button>
+    </div>
+</form>
+
+<hr />
+<div class="d-flex justify-content-around">
+    <a class="btn w-50 text-white" style="background-color: orangered" asp-controller="UnlockCell" asp-action="vIndex" onclick="return confirm('คุณต้องการเริ่มใหม่หรือไม่?');">
+        เริ่มใหม่
+    </a>
+
+    <a asp-controller="MainMenu" asp-action="vList" class="btn w-25 text-white" style="background-color: coral" onclick="return confirm('คุณต้องการกลับไปที่เมนูหลักหรือไม่?');">
+        เมนูหลัก
+    </a>
+</div>
+
+@section Scripts {
+    <script src="~/js/UnlockCell/vDetail.js" asp-append-version="true"></script>
+    <script>
+        $(document).ready(function () {
+            $("[name='txt_plantno']").val(localStorage.getItem("eqs_plantno"));
+            // if  name="txt_unlockreason" is found, then focus it
+            const unlockReasonInput = $("[name='txt_unlockreason']");
+            if (unlockReasonInput.length) {
+                unlockReasonInput.focus();
+            }
+        });
+    </script>
+}

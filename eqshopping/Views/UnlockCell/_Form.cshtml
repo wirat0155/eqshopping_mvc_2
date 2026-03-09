@@ -1,0 +1,13 @@
+﻿@using eqshopping.Controllers;
+@model UnlockCellController.vFormFM
+
+<div class="mt-3 mb-1 row">
+    <label class="col-3 col-form-label required"><b>Cell No. :</b></label>
+    <div class="col">
+        @{
+            var isCellNoDisabled = Model?.txt_cellno_disabled == true ? "disabled" : "";
+        }
+        <input class="form-control fs-2" name="txt_cellno" @isCellNoDisabled value="@Model?.txt_cellno" onkeyup="txtCellNo_KeyPress(event)" id="txtCellNo">
+        <small class="error text-danger" id="txt_cellno"></small>
+    </div>
+</div>

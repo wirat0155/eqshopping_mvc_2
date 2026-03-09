@@ -1,0 +1,54 @@
+﻿@inject Microsoft.Extensions.Configuration.IConfiguration Configuration
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Login - EQ Shopping</title>
+    <link rel="icon" type="image/png" href="~/themes/dist/img/logomainpage.png">
+    <link rel="stylesheet" href="~/css/loader.css" asp-append-version="true">
+    <link href="~/themes/dist/css/tabler.min.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/themes/dist/css/tabler-flags.min.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/themes/dist/css/tabler-socials.min.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/themes/dist/css/tabler-payments.min.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/themes/dist/css/tabler-vendors.min.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/themes/dist/css/tabler-marketing.min.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/themes/dist/css/demo.min.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/lib/sweetalert2/sweetalert2.min.css" rel="stylesheet" asp-append-version="true" />
+    <style>
+        .error.text-danger {
+            font-size: 1.5rem;
+        }
+    </style>
+</head>
+
+<body class=" d-flex flex-column">
+    <div class="loader-container" id="loader">
+        <div class="loader"></div>
+    </div>
+    <div class="page">
+        @RenderBody()
+    </div>
+
+    <script src="~/lib/jquery/jquery-3.7.1.min.js" asp-append-version="true"></script>
+    <script src="~/js/loader.js" asp-append-version="true"></script>
+    <script src="~/js/date.js" asp-append-version="true"></script>
+    <script src="~/js/function.js" asp-append-version="true"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/themes/dist/js/tabler.min.js" asp-append-version="true"></script>
+    <script src="~/themes/dist/js/demo.min.js" asp-append-version="true"></script>
+    <script src="~/lib/sweetalert2/sweetalert2.min.js" asp-append-version="true"></script>
+    <script>
+        window.onload = function () {
+            hideLoader();
+            preventBackForward();
+        }
+    </script>
+
+    @RenderSection("Scripts", required: false)
+</body>
+
+</html>

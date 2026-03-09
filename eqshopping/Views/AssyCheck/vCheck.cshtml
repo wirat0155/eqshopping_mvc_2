@@ -1,0 +1,83 @@
+@{
+    ViewData["Title"] = "Assy Check";
+}
+
+<div class="container mt-4">
+    <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+            <h3 class="card-title mb-0">Assy Check System</h3>
+        </div>
+        <div class="card-body">
+            <div class="row mb-3">
+                <div class="col-md-6 offset-md-3">
+                    <label for="txt_assylabel" class="form-label">Scan Assy Label:</label>
+                    <input type="text" class="form-control form-control-lg" id="txt_assylabel" placeholder="Scan here..." autocomplete="off" autofocus inputmode="none">
+                </div>
+            </div>
+
+            <div class="row mb-3" id="div_scan_count" style="display:none;">
+                <div class="col-md-6 offset-md-3 text-center">
+                    <div class="card bg-light border-info" id="div_scan_count_card">
+                        <div class="card-body">
+                            <h5 class="card-title text-info mb-3">สถานะการสแกน Final Assy</h5>
+                            <h1 class="display-3 fw-bold text-primary mb-0" id="lbl_scan_count">0 / 0</h1>
+                            <p class="card-text text-muted mt-2" id="lbl_scan_msg">สแกนไปแล้ว / จำนวนที่ต้องสแกน</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mb-3" id="div_partno" style="display:none;">
+                <div class="col-md-6 offset-md-3">
+                    <label for="txt_partno" class="form-label">Scan Part No:</label>
+                    <input type="text" class="form-control form-control-lg" id="txt_partno" placeholder="Scan Part No..." autocomplete="off" inputmode="none">
+                </div>
+            </div>
+            
+            <div class="text-center">
+                <button id="btn_reset" class="btn btn-warning btn-lg" style="display:none;">สแกนรายการถัดไป</button>
+            </div>
+
+            <div class="mt-4" id="div_history" style="display:none;">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <div class="d-flex align-items-center">
+                        <h5 class="mb-0 text-secondary me-3">
+                            <i class="fas fa-history text-muted me-1"></i> Scan History
+                        </h5>
+                        <span class="badge rounded-pill bg-success bg-opacity-75 shadow-sm px-3 py-2 fw-normal text-white">
+                            <i class="fas fa-check-circle me-1"></i> เฉพาะสแกนสำเร็จ
+                        </span>
+                    </div>
+                </div>
+                <div class="table-responsive rounded-3 shadow-sm border">
+                    <table class="table table-hover align-middle mb-0 bg-white" id="tbl_history">
+                        <thead class="bg-light text-secondary">
+                            <tr>
+                                <th class="py-3 px-4">Assy Label</th>
+                                <th class="py-3">Actual Part No</th>
+                                <th class="py-3">Check User</th>
+                                <th class="py-3">Check Date</th>
+                                <th class="py-3 text-center">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Data will be populated here -->
+                        </tbody>
+                    </table>
+                </div>
+                <div id="msg_no_history" class="alert alert-info text-center" style="display:none;">
+                    ยังไม่มีข้อมูลการสแกนที่สำเร็จ (No successful scan history found)
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="d-flex justify-content-center mt-3">
+    <a asp-controller="MainMenu" asp-action="vList" class="btn w-25 text-white" style="background-color: coral">
+        เมนูหลัก
+    </a>
+</div>
+
+@section Scripts {
+    <script src="~/js/AssyCheck/vCheck.js" asp-append-version="true"></script>
+}

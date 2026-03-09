@@ -1,0 +1,74 @@
+﻿@{
+    Layout = "_LayoutLogin";
+}
+@using eqshopping.Controllers 
+@model AuthController.vLoginFM
+<div class="container py-4" style="max-width: 800px;">
+    <div class="text-center mb-4">
+        <a href="#" class="navbar-brand navbar-brand-autodark d-flex justify-content-center">
+            <img src="~/themes/dist/img/logomainpage.png" class="img-fluid" style="width: 20%;" />
+        </a>
+    </div>
+
+
+    <div class="row" style="box-shadow: 0px 0px 14px -3px #BBB;">
+        <!-- Image Column -->
+        <div class="col-md-6 p-0 d-none d-md-block">
+            <img src="~/themes/dist/img/logomainpage.png" alt="Login Image" style="height: 100%; object-fit: cover;" />
+        </div>
+        <!-- Card Column -->
+        <div class="col-md-6 p-0">
+            <div class="card card-md" style="height: 100%;">
+                <div class="card-body">
+                    <h2 class="h2 text-center mb-4">เข้าสู่ระบบ</h2>
+                    <form onsubmit="login(event)">
+                        <div class="mb-2">
+                            <label class="form-label">
+                                <b>Plant :</b>
+                            </label>
+                            <select class="form-select fs-1" name="txt_plantno">
+                                @foreach (var plant in Model.op_plant)
+                                {
+                                    <option value="@plant.Value">@plant.Text</option>
+                                }
+                            </select>
+                            <span class="error text-danger" id="txt_plantno"></span>
+                        </div>
+                        <div class="mb-2">
+                            <label class="form-label">
+                                <b>รหัสพนักงาน :</b>
+                            </label>
+                            <input name="txt_empno" class="form-control fs-1" placeholder="2400XX" autocomplete="off">
+                            <span class="error text-danger" id="txt_empno"></span>
+                        </div>
+                        <div class="mb-2">
+                            <label class="form-label">
+                                <b>รหัสผ่าน :</b>
+                            </label>
+                            <div class="input-group input-group-flat">
+                                <input type="password" class="form-control fs-1" placeholder="รหัสผ่าน" autocomplete="off" name="txt_password">
+                                <span class="input-group-text">
+                                    <a href="#" class="link-secondary" title="Show password" data-bs-toggle="tooltip">
+                                        <!-- Download SVG icon from http://tabler.io/icons/icon/eye -->
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-1"><path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" /><path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6" /></svg>
+                                    </a>
+                                </span>
+                            </div>
+                            <span class="error text-danger" id="txt_password"></span>
+                        </div>
+                        <div class="form-footer">
+                            <div class="d-flex justify-content-around">
+                                <button type="submit" class="btn btn-success w-50 py-3 fs-1">Login</button>
+                                <button type="reset" class="btn btn-outline-secondary w-25">Reset</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/Auth/vLogin.js" asp-append-version="true"></script>
+}
