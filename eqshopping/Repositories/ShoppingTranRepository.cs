@@ -103,7 +103,7 @@ namespace eqshopping.Repositories
                         bool isPartInEquip = await IsPartInProductEquipment(obj_tran.partno);
                         if (isPartInEquip)
                         {
-                            obj_tran.checkingfinishflag = false;
+                            obj_tran.checkingfinishflag = true; // TEST เปลี่ยน false เมื่อได้รับ Handheld ใหม่แล้ว
                         }
                         else
                         {

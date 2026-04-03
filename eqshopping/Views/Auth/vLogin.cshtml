@@ -1,73 +1,125 @@
-﻿@{
+@{
     Layout = "_LayoutLogin";
 }
 @using eqshopping.Controllers 
 @model AuthController.vLoginFM
-<div class="container py-4" style="max-width: 800px;">
-    <div class="text-center mb-4">
-        <a href="#" class="navbar-brand navbar-brand-autodark d-flex justify-content-center">
-            <img src="~/themes/dist/img/logomainpage.png" class="img-fluid" style="width: 20%;" />
-        </a>
-    </div>
 
-
-    <div class="row" style="box-shadow: 0px 0px 14px -3px #BBB;">
-        <!-- Image Column -->
-        <div class="col-md-6 p-0 d-none d-md-block">
-            <img src="~/themes/dist/img/logomainpage.png" alt="Login Image" style="height: 100%; object-fit: cover;" />
+<div class="page page-center">
+    <div class="container container-tight py-4">
+        <div class="text-center mb-4">
+            <a href="." class="navbar-brand navbar-brand-autodark">
+                <img src="~/themes/dist/img/logomainpage.png" height="80" alt="Logo" class="navbar-brand-image">
+            </a>
         </div>
-        <!-- Card Column -->
-        <div class="col-md-6 p-0">
-            <div class="card card-md" style="height: 100%;">
-                <div class="card-body">
-                    <h2 class="h2 text-center mb-4">เข้าสู่ระบบ</h2>
-                    <form onsubmit="login(event)">
-                        <div class="mb-2">
-                            <label class="form-label">
-                                <b>Plant :</b>
-                            </label>
-                            <select class="form-select fs-1" name="txt_plantno">
-                                @foreach (var plant in Model.op_plant)
-                                {
-                                    <option value="@plant.Value">@plant.Text</option>
-                                }
-                            </select>
-                            <span class="error text-danger" id="txt_plantno"></span>
-                        </div>
-                        <div class="mb-2">
-                            <label class="form-label">
-                                <b>รหัสพนักงาน :</b>
-                            </label>
-                            <input name="txt_empno" class="form-control fs-1" placeholder="2400XX" autocomplete="off">
-                            <span class="error text-danger" id="txt_empno"></span>
-                        </div>
-                        <div class="mb-2">
-                            <label class="form-label">
-                                <b>รหัสผ่าน :</b>
-                            </label>
-                            <div class="input-group input-group-flat">
-                                <input type="password" class="form-control fs-1" placeholder="รหัสผ่าน" autocomplete="off" name="txt_password">
-                                <span class="input-group-text">
-                                    <a href="#" class="link-secondary" title="Show password" data-bs-toggle="tooltip">
-                                        <!-- Download SVG icon from http://tabler.io/icons/icon/eye -->
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-1"><path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" /><path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6" /></svg>
-                                    </a>
-                                </span>
+        <div class="card card-md border-0 shadow-sm">
+            <div class="row g-0">
+                <!-- Image Column (Desktop only) -->
+                <div class="col-lg-5 d-none d-lg-block border-end">
+                    <div class="bg-light h-100 d-flex align-items-center justify-content-center">
+                        <img src="~/themes/dist/img/logomainpage.png" alt="Login Illustration" class="img-fluid p-4" style="opacity: 0.8;">
+                    </div>
+                </div>
+                <!-- Form Column -->
+                <div class="col-lg-7">
+                    <div class="card-body">
+                        <h2 class="h2 text-center mb-4">เข้าสู่ระบบ</h2>
+                        <form onsubmit="login(event)" autocomplete="off">
+                            <div class="mb-3">
+                                <label class="form-label required">
+                                    <b>Plant :</b>
+                                </label>
+                                <select class="form-select" name="txt_plantno">
+                                    @foreach (var plant in Model.op_plant)
+                                    {
+                                        <option value="@plant.Value">@plant.Text</option>
+                                    }
+                                </select>
+                                <span class="error text-danger" id="txt_plantno"></span>
                             </div>
-                            <span class="error text-danger" id="txt_password"></span>
-                        </div>
-                        <div class="form-footer">
-                            <div class="d-flex justify-content-around">
-                                <button type="submit" class="btn btn-success w-50 py-3 fs-1">Login</button>
-                                <button type="reset" class="btn btn-outline-secondary w-25">Reset</button>
+                            <div class="mb-3">
+                                <label class="form-label required">
+                                    <b>รหัสพนักงาน :</b>
+                                </label>
+                                <input name="txt_empno" class="form-control" placeholder="2400XX" autocomplete="off" inputmode="numeric">
+                                <span class="error text-danger" id="txt_empno"></span>
                             </div>
-                        </div>
-                    </form>
+                            <div class="mb-3">
+                                <label class="form-label required">
+                                    <b>รหัสผ่าน :</b>
+                                </label>
+                                <div class="input-group input-group-flat">
+                                    <input type="password" class="form-control" placeholder="รหัสผ่าน" autocomplete="off" name="txt_password">
+                                    <span class="input-group-text">
+                                        <a href="javascript:void(0)" class="link-secondary" title="Show password" data-bs-toggle="tooltip" onclick="togglePassword(this)">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" /><path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 -6.6 2 9 6" /></svg>
+                                        </a>
+                                    </span>
+                                </div>
+                                <span class="error text-danger" id="txt_password"></span>
+                            </div>
+                            <div class="form-footer mt-4">
+                                <div class="row g-2">
+                                    <div class="col-8">
+                                        <button type="submit" class="btn btn-primary w-100 py-2">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-login" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2" /><path d="M20 12h-13" /><path d="M17 9l3 3l-3 3" /></svg>
+                                            Login
+                                        </button>
+                                    </div>
+                                    <div class="col-4">
+                                        <button type="reset" class="btn btn-link w-100">Reset</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<style>
+    /* ปรับแต่งสำหรับ Mobile/Handheld */
+    @@media (max-width: 991.98px) {
+        .container-tight {
+            max-width: 100%;
+            padding-left: 1.5rem;
+            padding-right: 1.5rem;
+        }
+        .card-body {
+            padding: 2rem 1.5rem;
+        }
+        .form-control, .form-select {
+            height: 3.5rem; /* ใหญ่ขึ้นเพื่อให้กดง่าย */
+            font-size: 1.1rem;
+        }
+        .form-label {
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+        }
+        .btn-primary {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+    }
+
+    /* สไตล์เพิ่มเติม */
+    .page-center {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        background-color: #f4f6fa;
+    }
+    .error.text-danger {
+        font-size: 0.875rem !important; /* เล็กลงหน่อยให้ดูสวยงาม */
+        margin-top: 0.25rem;
+        display: block;
+    }
+    .form-label.required:after {
+        content: " *";
+        color: #d63939;
+    }
+</style>
 
 @section Scripts {
     <script src="~/js/Auth/vLogin.js" asp-append-version="true"></script>

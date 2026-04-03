@@ -52,12 +52,17 @@ namespace eqshopping.Controllers
             _shoppingTranSub = shoppingTranSub;
             _config = config;
         }
+
         public IActionResult vIndex()
         {
             return View();
         }
 
 
+        public IActionResult vIndexTest()
+        {
+            return View();
+        }
 
         [HttpPost]
         public async Task<IActionResult> GetAssy(string txt_plantno, string txt_posno)
