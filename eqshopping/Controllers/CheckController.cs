@@ -1,4 +1,4 @@
-﻿using eqshopping.Models.DbModel;
+using eqshopping.Models.DbModel;
 using eqshopping.Models.DbView;
 using eqshopping.Repositories;
 using eqshopping.Utility;
@@ -280,7 +280,8 @@ namespace eqshopping.Controllers
                 txt_partno = obj_pos.PartNo;
             }
 
-            if (!await _cellProduct.CheckValidPart(form.txt_plantno, txt_partno, (int)txt_cellid))
+            pd_cellproduct obj_cellproduct = await _cellProduct.GetByPart(form.txt_plantno, txt_partno, (int)txt_cellid);
+            if (obj_cellproduct == null)
             {
                 string txt_lockreason = "Part: (" + txt_partno.Trim().ToUpper() + ") ไม่อยู่ในลิสที่จะผลิตใน Cell: (" + form.txt_cellno.Trim() + ")";
                 ModelState.AddModelError($"txt_posno", "Part No. นี้ไม่อยู่ในลิสที่จะผลิตใน Cell No. นี้ กรุณาแจ้งหัวหน้างานเพื่อปลดล็อค");
@@ -288,6 +289,7 @@ namespace eqshopping.Controllers
                 obj_validate.isError = true;
                 return obj_validate;
             }
+
             if (!await _productEquip.CheckExist(form.txt_plantno, txt_partno))
             {
                 ModelState.AddModelError($"txt_posno", "ยังไม่มีการกำหนดข้อมูล Product Epuipment");
@@ -295,8 +297,8 @@ namespace eqshopping.Controllers
                 return obj_validate;
             }
 
-            // 20250901 Wirat ถ้า PLT3 แล้ว เริ่มยิงโดยยังไม่มี DISTRIBUTOR หรือเริ่มยิงโดย DISTRIBUTOR ยังยิงไม่ครบ ให้ Lock Cell
-            if (form.txt_plantno == "PLT3")
+            // 20250901 Wirat ถ้า PLT3 และ plt3_singlecheckflag = 0 แล้ว เริ่มยิงโดยยังไม่มี DISTRIBUTOR หรือเริ่มยิงโดย DISTRIBUTOR ยังยิงไม่ครบ ให้ Lock Cell
+            if (form.txt_plantno == "PLT3" && obj_cellproduct.plt3_singlecheckflag == false)
             {
                 eqs_shoppingtran obj_shoppingtran = await _shoppingTran.Get(form.txt_plantno, txt_posno, txt_partno, txt_cellid);
                 if ((obj_shoppingtran == null || obj_shoppingtran.discheckingfinishflag == false) && form.txt_role != "DISTRIBUTOR")

@@ -1,9 +1,10 @@
-﻿using eqshopping.Data;
+using eqshopping.Data;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using eqshopping.Models.DbModel;
 
 namespace eqshopping.Repositories
 {
@@ -21,6 +22,13 @@ namespace eqshopping.Repositories
         {
             return await _eqsDb.pd_cellproduct
             .AnyAsync(p => p.plantno == txt_plantno
+                     && p.partno == partNo
+                     && p.cellid == cellid);
+        }
+        public async Task<pd_cellproduct> GetByPart(string txt_plantno, string partNo, int cellid)
+        {
+            return await _eqsDb.pd_cellproduct
+            .FirstOrDefaultAsync(p => p.plantno == txt_plantno
                      && p.partno == partNo
                      && p.cellid == cellid);
         }

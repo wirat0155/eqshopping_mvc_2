@@ -1,4 +1,4 @@
-﻿using eqshopping.Data;
+using eqshopping.Data;
 using eqshopping.Models.DbModel;
 using eqshopping.Utility;
 using Microsoft.EntityFrameworkCore;
@@ -100,7 +100,7 @@ namespace eqshopping.Repositories
                     if (obj_next == null)
                     {
                         // Check if part exists in eqs_productequipment (PLT3)
-                        bool isPartInEquip = await IsPartInProductEquipment(obj_tran.partno);
+                        bool isPartInEquip = await IsPartInProductEquipment(obj_tran.partno, obj_tran.cellid);
                         if (isPartInEquip)
                         {
                             obj_tran.checkingfinishflag = true; // TEST เปลี่ยน false เมื่อได้รับ Handheld ใหม่แล้ว
@@ -279,20 +279,20 @@ namespace eqshopping.Repositories
             return true;
         }
 
-        public async Task<bool> IsPartInProductEquipment(string partNo)
+        public async Task<bool> IsPartInProductEquipment(string partNo, int cellid)
         {
             try
             {
                 string sql = @"
-                  SELECT count(*)
-                  FROM [eqs_productcell]
-                  inner join [eqs_productequipment]
-                  ON [eqs_productcell].partno = [eqs_productequipment].partno
-                  WHERE [eqs_productequipment].plantno = 'PLT3'
-                  AND [eqs_productcell].partno = @partNo";
+                  SELECT ISNULL(plt3_singlecheckflag, 0)
+                  FROM [pd_cellproduct]
+                  WHERE plantno = 'PLT3'
+                  AND partno = @partNo
+                  AND cellid = @cellid";
 
-                int count = await _dapper.QueryFirst<int>(sql, "U2", new { partNo = partNo });
-                return count > 0;
+                bool flag = await _dapper.QueryFirst<bool?>(sql, "U2", new { partNo = partNo, cellid = cellid }) ?? true; // Default to true (single check) if not found? 
+                // Return true if flag is 0 (False)
+                return !flag;
             }
             catch
             {
